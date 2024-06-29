@@ -12,7 +12,7 @@ It uses DuckDuckGo for the image scraping as they return nice big images and hav
 
 ## Install
 
-`pip install jmd_imagescraper`
+`!pip install -q git+https://github.com/ryugibo/jmd_imagescraper`
 
 ## How to use
 
