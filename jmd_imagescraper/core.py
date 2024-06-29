@@ -71,15 +71,6 @@ def duckduckgo_scrape_urls(keywords: str, max_results: int,
                            img_color: ImgColor=ImgColor.All) -> list:
   '''Scrapes URLs from DuckDuckGo image search. Returns list of URLs.'''
   BASE_URL = 'https://duckduckgo.com/'
-  params = {
-    'q': keywords
-  };
-  results = 0
-  links = []
-
-  resp = requests.post(BASE_URL, data=params)
-  match = re.search(r'vqd=([\d-]+)\&', resp.text, re.M|re.I)
-  assert match is not None, "Failed to obtain search token"
 
   HEADERS = {
       'authority': 'duckduckgo.com',
@@ -92,6 +83,16 @@ def duckduckgo_scrape_urls(keywords: str, max_results: int,
       'referer': 'https://duckduckgo.com/',
       'accept-language': 'en-US,en;q=0.9',
   }
+
+  params = {
+    'q': keywords
+  };
+  results = 0
+  links = []
+
+  resp = requests.post(BASE_URL, data=params, headers=HEADERS)
+  match = re.search(r'vqd=([\d-]+)\&', resp.text, re.M|re.I)
+  assert match is not None, "Failed to obtain search token"
 
   filters = ""
   if(img_size != ImgSize.Cached): filters +=  "size:" + img_size.name
